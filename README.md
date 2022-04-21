@@ -1,7 +1,7 @@
 # JG Excel-Converter
 
-This little Project converts the Report of the Jugend Gründet buisness game into an easy to use Excel Table. To achive
-this it makes use of of [PyPDF2](https://pypi.org/project/PyPDF2/) and RegEx.
+This little Project converts the Report of the Jugend Gründet business game into an easy-to-use Excel Table. To achieve
+this it makes use of [PyPDF2](https://pypi.org/project/PyPDF2/) and RegEx.
 
 ## Usage
 
