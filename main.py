@@ -107,21 +107,11 @@ d = {
     "Innovationsindex": [],
     "Innovationsindex Branche": [],
 }
-regex_site_one = r".*?(\d+\..{3}).*?(\d{3}).*?(\d{2} %).*?(\d{3} und \d{3}).*?(\d{2,3}\.\d{3}).*?(\d{2} \%).*?(\w*) " \
-                 r"W.*?(\d{1,2}).*?(\d{2,3}).*?(\d{1,2} und \d{1,2}).*?(\d{2,3} und \d{2,3}).*?(\d{2," \
-                 r"3}).*?(\d{2}).*?(\w*) Bekann.*?(\d{2,3}).*?(\d{2,3} bis \d{2,3}).*?(\d{2,3}.\d{3}).*tz (\w* " \
-                 r"?\w*).*?(\d{2,3}).*?(\d{2,3}).*?(\d{2,3}.*?\d{2,3}) "
-regex_site_one_markt_two = r".*?(\d+\..{3}).*?(\d{3}).*?(\d{2} %).*?(\d{3} und \d{3}).*?(\d{0,2}\.?\d{3}).*?(\d{3} " \
-                           r"und \d{3}).*?(\d{2,3}\.\d{3}).*?(\d{2} \%).*?(\w*) W.*?(\d{1,2}).*?(\d{2,3}).*?(\d{1," \
-                           r"2} und \d{1,2}).*?(\d{2,3} und \d{2,3}).*?(\d{2,3}).*?(\d{2}).*?(\w*) Bekann.*?(\d{2," \
-                           r"3}).*?(\d{2,3} bis \d{2,3}).*?(\d{2,3}.\d{3}).*tz (\w* ?\w*).*?(\d{2,3}).*?(\d{2," \
-                           r"3}).*?(\d{2,3}.*?\d{2,3}) "
+regex_site_one = r".*?(\d+\..{3}).*?(\d{3}).*?(\d{2} %).*?(\d{3} und \d{3}).*?(\d{2,3}\.\d{3}).*?(\d{1,2} \%).*?(\w*) W.*?(\d{1,2}).*?(\d{2,3}).*?(\d{1,2} und \d{1,2}).*?(\d{2,3} und \d{2,3}).*?(\d{2,3}).*?(\d{2}).*?(\w*) Bekann.*?(\d{2,3}).*?(\d{2,3} bis \d{2,3}).*?(\d{2,3}.\d{3}).*tz (\w* ?\w*).*?(\d{2,3}).*?(\d{2,3}).*?(\d{2,3}.*?\d{2,3})"
+regex_site_one_markt_two = r".*?(\d+\..{3}).*?(\d{3}).*?(\d{1,2} %).*?(\d{3} und \d{3}).*?(\d{0,2}\.?\d{3}).*?(\d{3} und \d{3}).*?(\d{2,3}\.\d{3}).*?(\d{1,2} \%).*?(\w*) W.*?(\d{1,2}).*?(\d{2,3}).*?(\d{1,2} und \d{1,2}).*?(\d{2,3} und \d{2,3}).*?(\d{2,3}).*?(\d{2}).*?(\w*) Bekann.*?(\d{2,3}).*?(\d{2,3} bis \d{2,3}).*?(\d{2,3}.\d{3}).*tz (\w* ?\w*).*?(\d{2,3}).*?(\d{2,3}).*?(\d{2,3}.*?\d{2,3})"
 regex_site_three_p1 = r".*?po.*?t.*?\d.*?(\d+\.\d{3}).*?Um.*?\d.*?(\d?\.?\d{1,3}\.\d{3}).*?End.*?(\d) (\d)"
-regex_site_three = r".*?po.*?t.*?\d.*?\d{1,}.\d{3} (\d{1,}.\d{3}).*?Um.*?\d.*?\d?.?\d{1,}.\d{3}.\d{3} (\d*.?\d{2," \
-                   r"}.\d{3}).*?End.*?(\d) (\d) "
-regex_site_three_markt_two = r".*?po.*?t 1.*?\d{1,2}.\d{3} (\d{1,2}\.\d{3}).*?Umsatz.*?\d.*?\d.\d{3}.\d{3} (\d.\d{" \
-                             r"3}.\d{3}).*?po.*?\d?.?\d{3} (\d?.?\d{3}).*?Preis.*?\d.*?\d{3} (\d{3}).*?Um.*?\d.*?\d{" \
-                             r"1,3}.\d{3} (\d{1,3}.\d{3}).*?End.*?(\d) (\d) "
+regex_site_three = r".*?po.*?t.*?\d.*?\d{1,}.\d{3} (\d{1,}.\d{3}).*?Um.*?\d.*?\d?.?\d{1,}.\d{3}.\d{3} (\d*.?\d{2,}.\d{3}).*?End.*?(\d) (\d)"
+regex_site_three_markt_two = r".*?po.*?t 1.*?\d{1,2}.\d{3} (\d{1,2}\.\d{3}).*?Umsatz.*?\d.*?\d.\d{3}.\d{3} (\d.\d{3}.\d{3}).*?po.*?\d?.?\d{3} (\d?.?\d{3}).*?Preis.*?\d.*?\d{3} (\d{3}).*?Um.*?\d.*?\d{1,3}.\d{3} (\d{1,3}.\d{3}).*?End.*?(\d) (\d)"
 
 
 def fill_empty():
@@ -149,11 +139,13 @@ if __name__ == "__main__":
 
     if args.d:
         directory = args.d
+    else:
+        directory = '.'
     if args.s:
         start = args.s
-    if args.End:
+    if args.e:
         end = args.e
-    if args.Name:
+    if args.n:
         name = args.n
     else:
         name = os.path.basename(directory)
@@ -168,17 +160,18 @@ if __name__ == "__main__":
             pdf = PdfFileReader(f)
             first_page = pdf.getPage(0)
             first_page = re.sub(r'\s{2,}', ' ', first_page.extractText().replace('\n', ' '))
+            print(first_page)
 
             third_page = pdf.getPage(2)
             third_page = re.sub(r'\s{2,}', ' ', third_page.extractText().replace('\n', ' '))
-
-            if i <= 3 or i == 8:
+            print(i)
+            if i <= 4:
                 groups_one = re.match(regex_site_one, first_page).groups()
                 groups_three = re.match(regex_site_three_p1, third_page).groups()
                 currentgraph = graph
                 fill_empty()
 
-            elif i > 3:
+            elif i > 4:
                 groups_one = re.match(regex_site_one_markt_two, first_page).groups()
                 groups_three = re.match(regex_site_three_markt_two, third_page).groups()
                 currentgraph = graph_period_four
