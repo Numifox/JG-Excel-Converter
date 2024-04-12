@@ -18,7 +18,7 @@ optional arguments:
 
 ```
 
-## What is Jugend Gründet ?
+## What is Jugend Gründet?
 
 Jugend Gründet is a German Federal Competition for students and trainees. It is divided into a business plan phase and a
 business game phase.
